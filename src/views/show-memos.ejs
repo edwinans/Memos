@@ -1,0 +1,62 @@
+<%- include ('partial/header.ejs', {title: "Memos Page"}) %>
+
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        New Memo
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Memo content: </h5>
+                        <p class="card-text">
+                            The content will be show here
+                        </p>
+                        <a href="/create-memo" class="btn btn-primary" id="add-memo-btn">Add Memo</a>
+                    </div>
+                </div>
+            </div>
+
+            <% for(memo of memos){ %>
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <%= memo.title %>
+
+
+                                <a class="memo-icon" href="<%= '/delete-memo/' + memo.id %>">
+                                    <img src="delete.png" alt="" width="20" height="20">
+                                </a>
+
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Memo content:
+                                <a class="memo-icon" href="<%= '/edit-memo/' + memo.id %>">
+                                    <img src="edit.svg" alt="" width="20" height="20">
+                                </a>
+                            </h5>
+                            <p class="card-text">
+                                <% memo.content = memo.content.substring(0,50) %>
+                                    <%= memo.content %>&hellip;
+                            </p>
+                            <a href="<%= '/show-memos/' + memo.id %>" class="btn btn-primary">
+                                Show memo
+                            </a>
+                            <span id="memo-author">
+                                author: <%= memo.username %>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <% } %>
+
+
+
+
+        </div>
+    </div>
+
+    <%- include ('partial/footer.ejs') %>

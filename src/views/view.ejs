@@ -1,0 +1,68 @@
+<%- include ('partial/header.ejs', {title :"Login Page"}) %>
+
+    <div class="container">
+        <p id="errors">
+            <%= errors %>
+        </p>
+
+        <div class="row d-flex justify-content-center">
+
+            <div class="col-6 ">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">login</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">register</a>
+
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <form class="form-signin" method="POST" action="/login">
+                            <img class="mb-4" src="note-memo.png" alt="" width="72" height="72">
+                            <h1 class="h3 mb-3 font-weight-normal">Please sign-in</h1>
+                            <label for="inputLoginUsername" class="sr-only">Username</label>
+                            <input type="text" name="loginUser" id="inputLoginUsername" class="form-control" placeholder="Username" required minlength="4" maxlength="12" autofocus="">
+                            <label for="inputLoginPassword" class="sr-only">Password</label>
+                            <input type="password" name="loginPass" id="inputLoginPassword" class="form-control" placeholder="Password" required>
+                            <div class="checkbox mb-3">
+                                <label>
+                                <input type="checkbox" value="remember-me"> Remember me
+                                </label>
+                            </div>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <form class="form-register" method="POST" action="/register">
+                            <img class="mb-4" src="note-memo.png" alt="" width="72" height="72">
+                            <h1 class="h3 mb-3 font-weight-normal">Registration</h1>
+                            <label for="inputRegisterUsername" class="sr-only">Username</label>
+                            <input type="text" name="registerUser" id="inputRegisterUsername" class="form-control" placeholder="Username" minlength="4" maxlength="12" required="" autofocus="">
+                            <label for="inputRegisterPassword" class="sr-only">Password</label>
+                            <input type="password" name="registerPass" id="inputRegisterPassword" class="form-control" placeholder="Password" minlength="4" required="">
+
+                            <label for="inputRegisterPasswordConfirm" class="sr-only">Password Confirmation</label>
+                            <input type="password" name="registerPassConfirm" id="inputRegisterPasswordConfirm" class="form-control" placeholder="Re-enter password" minlength="4" required="">
+                            <br>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            var error = $("#errors").text().trim();
+            if (error)
+                alert(error)
+        });
+    </script>
+
+
+    <%- include ('partial/footer.ejs') %>

@@ -1,0 +1,100 @@
+<%- include ('partial/header.ejs', {title: "Edit Memo Page"}) %>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-6">
+
+                <form id="cmemo">
+                    <div class="form-group">
+                        <label for="titleInput">title</label>
+                        <input type="text" name="title" class="form-control" id="titleInput" value="<%= memo.title %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="textInput">memo content</label>
+                        <textarea class="form-control" name="content" id="content" rows="3"><%= memo.content %></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Submit changes
+                    </button>
+
+                    <p id="submit-result"></p>
+                </form>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="editedModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Memo edited:
+                            <%= memo.title %>
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5> New content:</h5>
+                        <p></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#cmemo").submit(function(e) {
+                e.preventDefault()
+                $('#editedModal').modal('show');
+
+                // $(this).find("#submit-result").text("memo edited successfully!");
+
+                var main = {}
+                var title = $(this).find("input[name=title]").val()
+                var content = $(this).find("#content").val()
+                var memoId = $(this).find("#memo-id").val()
+
+                $(".modal-body").find("p").text(content);
+
+
+                main['title'] = title;
+                main['content'] = content;
+                main['id'] = <%= memo.id %>;
+
+                $.ajax({
+                    type: 'POST',
+                    url: "/edit-memo/submit",
+                    data: JSON.stringify({
+                        memo: main
+                    }),
+                    cache: false,
+                    contentType: "application/json; charset=UTF-8",
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response)
+
+                        if (response == true) {
+
+
+                        } else {
+
+                        };
+
+                    },
+                    error: function() {
+                        // alert("Error connecting server");
+                    }
+
+                });
+            })
+        })
+    </script>
+    <%- include ('partial/footer.ejs') %>

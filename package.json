@@ -1,0 +1,22 @@
+{
+    "name": "dm",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/main.js",
+    "scripts": {
+        "start": "nodemon start main.js -e js,ejs,html,css"
+    },
+    "author": "Edwin Ansari",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^4.0.1",
+        "body-parser": "^1.19.0",
+        "cookie-session": "^1.4.0",
+        "ejs": "^3.0.1",
+        "express.js": "^1.0.0",
+        "mysql": "^2.18.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.2"
+    }
+}

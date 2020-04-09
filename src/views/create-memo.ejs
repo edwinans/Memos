@@ -1,0 +1,148 @@
+<%- include ('partial/header.ejs', {title: "Create Memo Page"}) %>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-6">
+
+                <form id="cmemo">
+                    <div class="form-group">
+                        <label for="titleInput">title</label>
+                        <input type="text" name="title" class="form-control" id="titleInput" placeholder="memo title">
+                    </div>
+                    <div class="form-group">
+                        <label for="textInput">memo content</label>
+                        <textarea class="form-control" name="content" id="content" rows="3"></textarea>
+                    </div>
+
+                    <div class="tbl">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">users</th>
+                                    <th scope="col">read</th>
+                                    <th scope="col">write</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <% var i=0; for(user of users){%>
+                                    <tr class="user-rows" data-user-id='<%= user.id%>'>
+                                        <th scope="row">
+                                            <%= ++i; %>
+                                        </th>
+                                        <td>
+                                            <%= user.username %>
+                                        </td>
+                                        <td>
+                                            <div class="form-group form-check ">
+                                                <input type="checkbox" name="read" class="form-check-input">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group form-check">
+                                                <input type="checkbox" name="write" class="form-check-input">
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                    <% } %>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="createdModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Memo created successfully!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5> Content:</h5>
+                        <p></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#cmemo").submit(function(e) {
+                e.preventDefault()
+
+                $('#createdModal').modal('show');
+
+                var main = {}
+                var title = $(this).find("input[name=title]").val()
+                var content = $(this).find("#content").val()
+
+                $(".modal-body").find("p").text(content);
+
+                main['title'] = title;
+                main['content'] = content;
+
+                var arr = []
+                $(".user-rows").each(function(e) {
+                    var obj = {
+                        "user_id": $(this).data('user-id'),
+                        "read": $(this).find("input[name=read]:checked").length > 0 ? true : false,
+                        "write": $(this).find("input[name=write]:checked").length > 0 ? true : false,
+                    }
+
+                    arr.push(obj)
+                })
+
+                main['user_access'] = arr;
+
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: "/create-memo/add-memo",
+                    data: JSON.stringify({
+                        memo: main
+                    }),
+                    cache: false,
+                    contentType: "application/json; charset=UTF-8",
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response)
+
+                        if (response == true) {
+
+
+                        } else {
+
+                        };
+
+                    },
+                    error: function() {
+                        // alert("Error connecting server");
+                    }
+
+                });
+            })
+        })
+    </script>
+
+
+    <%- include ('partial/footer.ejs') %>
