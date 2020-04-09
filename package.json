@@ -4,7 +4,7 @@
     "description": "",
     "main": "src/main.js",
     "scripts": {
-        "start": "nodemon start main.js -e js,ejs,html,css"
+        "start": "cd src && nodemon main.js"
     },
     "author": "Edwin Ansari",
     "license": "ISC",
