@@ -1,20 +1,13 @@
 var mysql = require('mysql');
 
-const ufrID = "etu21707619";
-const ufrConfig = {
-    host: "lampe",
-    user: ufrID,
-    password: ufrID,
-    database: ufrID
+const credit = {
+    host: "you mysql server host",
+    user: "your mysql username",
+    password: "your mysql password",
+    database: "mysql db name that you want to use"
 };
-//configuration pour les machines de l’UFR!
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "mouse",
-    database: "mydb"
-});
+var connection = mysql.createConnection(credit);
 
 connection.connect(function(err) {
     if (err) throw err;
